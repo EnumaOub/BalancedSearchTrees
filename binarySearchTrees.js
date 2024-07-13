@@ -50,7 +50,23 @@ class Tree {
     }
 
     insert(value) {
+        return this.insertNode(value, this.root)
+    };
 
+    insertNode(value, node) {
+        if (!node) {
+            return new Node(value);
+        }
+        if (value < node.data) {
+            node.left = this.insertNode(value, node.left);
+        }
+        else if (value > node.data) {
+            node.right = this.insertNode(value, node.right);
+        }
+        else if (value === node.data) {
+            return;
+        }
+        return node;
     };
 
     deleteItem(value) {
@@ -61,4 +77,12 @@ class Tree {
 
 const BST = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
+BST.showNode(BST.root)
+BST.insert(25);
+BST.showNode(BST.root)
+BST.insert(5555);
+BST.showNode(BST.root)
+BST.insert(2);
+BST.showNode(BST.root)
+BST.insert(8888);
 BST.showNode(BST.root)
