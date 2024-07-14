@@ -121,7 +121,33 @@ class Tree {
         else if (value > node.data) {
             return this.findeNode(value, node.right);
         }
-    }
+    };
+
+    levelOrder(callback=null) {
+        let queue = [];
+        let data = [];
+        let nodeC = this.root;
+        queue.push(nodeC);
+        while (queue.length > 0) {
+            data.push(nodeC);
+            queue.splice(0,1);
+            if (nodeC.left) {
+                queue.push(nodeC.left);
+            }
+            if (nodeC.right) {
+                queue.push(nodeC.right);
+            }
+            nodeC = queue[0];
+            
+        }
+        if (callback) {
+            return callback(data);
+        }
+        else {
+            return data;
+        }
+    };
+
     
 };
 
@@ -144,5 +170,7 @@ console.log("\nDelete 23 DATA : \n")
 BST.showNode(BST.root)
 
 console.log("\nFIND 25 Node : \n")
-
 console.log(BST.find(25))
+
+console.log("\nTest levelOrder : \n")
+console.log(BST.levelOrder())
