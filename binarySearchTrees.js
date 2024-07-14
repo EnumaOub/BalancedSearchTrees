@@ -99,13 +99,30 @@ class Tree {
     };
 
     minValue(node) {
-        let minValue = node.data;
+        let minVal = node.data;
         while (node.letf) {
-            minValue = node.left.data;
+            minVal = node.left.data;
             node = node.left;
         }
-        return minValue;
+        return minVal;
+    };
+
+    find(value) {
+        return this.findeNode(value, this.root)
+    };
+
+    findeNode(value, node) {
+        if (!node || value === node.data) {
+            return node;
+        }
+        if (value < node.data) {
+            return this.findeNode(value, node.left);
+        }
+        else if (value > node.data) {
+            return this.findeNode(value, node.right);
+        }
     }
+    
 };
 
 
@@ -125,3 +142,7 @@ BST.showNode(BST.root)
 BST.deleteItem(23);
 console.log("\nDelete 23 DATA : \n")
 BST.showNode(BST.root)
+
+console.log("\nFIND 25 Node : \n")
+
+console.log(BST.find(25))
