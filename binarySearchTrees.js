@@ -214,8 +214,16 @@ class Tree {
         return data;
     };
 
-    height(node) {
-
+    height(node = this.root) {
+        if (node) {
+            let heightL = this.height(node.left);
+            let heightR = this.height(node.right);
+            return Math.max(heightL, heightR) + 1;
+        }
+        else {
+            return -1;
+        }
+        
     };
 
     depth(node) {
@@ -264,3 +272,9 @@ console.log(BST.preOrder())
 
 console.log("\nTest postOrder : \n")
 console.log(BST.postOrder())
+
+console.log("\nTest Height : \n")
+console.log(BST.height())
+
+console.log("\nTest Height node root.right.right  : \n")
+console.log(BST.height(BST.root.right.right))
