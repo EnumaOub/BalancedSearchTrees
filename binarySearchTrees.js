@@ -148,6 +148,87 @@ class Tree {
         }
     };
 
+    inOrder(callback=null) {
+        const data = this.inOrderNode(this.root);
+        if (callback) {
+            return callback(data);
+        }
+        else {
+            return data;
+        } 
+    };
+
+    inOrderNode(node, data = []) {
+        if (node) {
+            this.inOrderNode(node.left, data);
+            data.push(node);
+            this.inOrderNode(node.right, data);
+        }
+        else {
+            return;
+        }
+        return data;
+    };
+
+    preOrder(callback=null) {
+        const data = this.preOrderNode(this.root);
+        if (callback) {
+            return callback(data);
+        }
+        else {
+            return data;
+        } 
+    };
+
+    preOrderNode(node, data = []) {
+        if (node) {
+            data.push(node);
+            this.preOrderNode(node.left, data);
+            this.preOrderNode(node.right, data);
+        }
+        else {
+            return;
+        }
+        return data;
+    };
+
+    postOrder(callback=null) {
+        const data = this.postOrderNode(this.root);
+        if (callback) {
+            return callback(data);
+        }
+        else {
+            return data;
+        } 
+    };
+
+    postOrderNode(node, data = []) {
+        if (node) {
+            this.preOrderNode(node.left, data);
+            this.preOrderNode(node.right, data);
+            data.push(node);
+        }
+        else {
+            return;
+        }
+        return data;
+    };
+
+    height(node) {
+
+    };
+
+    depth(node) {
+
+    };
+
+    isBalanced() {
+
+    };
+
+    rebalance() {
+
+    };
     
 };
 
@@ -174,3 +255,12 @@ console.log(BST.find(25))
 
 console.log("\nTest levelOrder : \n")
 console.log(BST.levelOrder())
+
+console.log("\nTest inOrder : \n")
+console.log(BST.inOrder())
+
+console.log("\nTest preOrder : \n")
+console.log(BST.preOrder())
+
+console.log("\nTest postOrder : \n")
+console.log(BST.postOrder())
