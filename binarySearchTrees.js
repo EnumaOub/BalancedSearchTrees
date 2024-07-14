@@ -247,25 +247,17 @@ class Tree {
     };
 
     isBalanced() {
-        return this.balanceNode(this.root) !== -1;
-    };
-
-    balanceNode(node) {
-        if (node) {
-            let heightL = this.height(node.left);
-            let heightR = this.height(node.right);
+        if (this.root) {
+            let heightL = this.height(this.root.left);
+            let heightR = this.height(this.root.right);
             const diffLR = Math.abs(heightL - heightR);
-            if (diffLR > 1 || heightL === -1 || heightR === -1 ) {
-                return -1
-            }
-            else {
-                return Math.max(heightL, heightR) + 1;
-            }
+
+            return (!(diffLR > 1 || heightL === -1 || heightR === -1 ))
         }
         else {
-            return 0;
+            return true;
         }
-    }
+    };
 
     rebalance() {
         this.root = this.buildTree(this.inOrder(this.getValueNode));
@@ -346,3 +338,16 @@ console.log("\nTest Rebalance : \n")
 console.log(BST.rebalance())
 console.log("\nTest Balance  : \n")
 console.log(BST.isBalanced())
+
+
+console.log("\nTest levelOrder : \n")
+console.log(BST.levelOrder())
+
+console.log("\nTest inOrder : \n")
+console.log(BST.inOrder())
+
+console.log("\nTest preOrder : \n")
+console.log(BST.preOrder())
+
+console.log("\nTest postOrder : \n")
+console.log(BST.postOrder())
