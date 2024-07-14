@@ -63,9 +63,6 @@ class Tree {
         else if (value > node.data) {
             node.right = this.insertNode(value, node.right);
         }
-        else if (value === node.data) {
-            return;
-        }
         return node;
     };
 
@@ -218,63 +215,134 @@ class Tree {
         if (node) {
             let heightL = this.height(node.left);
             let heightR = this.height(node.right);
-            return Math.max(heightL, heightR) + 1;
+            if (heightL - heightR > 1) {
+                return -1;
+            }
+            else {
+                return Math.max(heightL, heightR) + 1;
+            }
+            
         }
         else {
-            return -1;
+            return 0;
         }
         
     };
 
-    depth(node) {
-
+    depth(node, root = this.root, depth = 0) {
+        if (root) {
+            if (node.data < root.data) {
+                return this.depth(node, root.left, depth + 1);
+            }
+            else if (node.data > root.data) {
+                return this.depth(node, root.right, depth + 1);
+            }
+            else if (root.data === node.data ) {
+                return depth;
+            }
+        }
+        else {
+            return 0;
+        }
     };
 
     isBalanced() {
-
+        return this.balanceNode(this.root) !== -1;
     };
 
-    rebalance() {
+    balanceNode(node) {
+        if (node) {
+            let heightL = this.height(node.left);
+            let heightR = this.height(node.right);
+            const diffLR = Math.abs(heightL - heightR);
+            if (diffLR > 1 || heightL === -1 || heightR === -1 ) {
+                return -1
+            }
+            else {
+                return Math.max(heightL, heightR) + 1;
+            }
+        }
+        else {
+            return 0;
+        }
+    }
 
+    rebalance() {
+        this.root = this.buildTree(this.inOrder(this.getValueNode));
+        return this.root;
+    };
+
+    getValueNode(array) {
+        array.forEach(function(item, index) {
+            this[index] = item.data;
+          }, array);
+        return array
     };
     
 };
 
 
-const BST = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// const BST = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+
+// console.log("Initial DATA : \n")
+// BST.showNode(BST.root)
+
+// BST.insert(25);
+// console.log("\nInsert 25 DATA : \n")
+// BST.showNode(BST.root)
+
+// BST.insert(5555);
+// console.log("\nInsert 5555 DATA : \n")
+// BST.showNode(BST.root)
+
+// BST.deleteItem(23);
+// console.log("\nDelete 23 DATA : \n")
+// BST.showNode(BST.root)
+
+// console.log("\nFIND 25 Node : \n")
+// console.log(BST.find(25))
+
+// console.log("\nTest levelOrder : \n")
+// console.log(BST.levelOrder())
+
+// console.log("\nTest inOrder : \n")
+// console.log(BST.inOrder())
+
+// console.log("\nTest preOrder : \n")
+// console.log(BST.preOrder())
+
+// console.log("\nTest postOrder : \n")
+// console.log(BST.postOrder())
+
+// console.log("\nTest Height : \n")
+// console.log(BST.height())
+
+// console.log("\nTest Height node root.right.right  : \n")
+// console.log(BST.height(BST.root.right.right))
+
+// console.log("\nTest Depth node root.left : \n")
+// console.log(BST.depth(BST.root.left))
+
+// console.log("\nTest Depth node root.right.right  : \n")
+// console.log(BST.depth(BST.root.right.right))
+
+
+const BST = new Tree(Array.from({length: 10}, () => Math.floor(Math.random() * 100)));
 
 console.log("Initial DATA : \n")
 BST.showNode(BST.root)
 
-BST.insert(25);
-console.log("\nInsert 25 DATA : \n")
-BST.showNode(BST.root)
+console.log("\nTest Balance  : \n")
+console.log(BST.isBalanced())
 
-BST.insert(5555);
-console.log("\nInsert 5555 DATA : \n")
-BST.showNode(BST.root)
+for (i=0; i<15; i++) {
+    BST.insert(Math.floor(Math.random() * 100));
+};
 
-BST.deleteItem(23);
-console.log("\nDelete 23 DATA : \n")
-BST.showNode(BST.root)
+console.log("\nTest Balance after adding numbers : \n")
+console.log(BST.isBalanced())
 
-console.log("\nFIND 25 Node : \n")
-console.log(BST.find(25))
-
-console.log("\nTest levelOrder : \n")
-console.log(BST.levelOrder())
-
-console.log("\nTest inOrder : \n")
-console.log(BST.inOrder())
-
-console.log("\nTest preOrder : \n")
-console.log(BST.preOrder())
-
-console.log("\nTest postOrder : \n")
-console.log(BST.postOrder())
-
-console.log("\nTest Height : \n")
-console.log(BST.height())
-
-console.log("\nTest Height node root.right.right  : \n")
-console.log(BST.height(BST.root.right.right))
+console.log("\nTest Rebalance : \n")
+console.log(BST.rebalance())
+console.log("\nTest Balance  : \n")
+console.log(BST.isBalanced())
